@@ -1,70 +1,95 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.9;
+pragma solidity ^0.8.12;
 
-import "@openzeppelin/contracts/access/Ownable.sol";
+interface IERC20 {
+    function transferFrom(
+        address sender,
+        address recipient,
+        uint256 amount
+    ) external returns (bool);
 
-/// @title FeeDeductor
-/// @notice Manages charitable funds with an integrated fee mechanism.
-/// @dev Designed to keep logic straightforward and auditable.
-contract FeeDeductor is Ownable {
-    // Address where fee proceeds are collected.
+    function transfer(
+        address recipient,
+        uint256 amount
+    ) external returns (bool);
+}
+
+contract FeeDeductionUSDC {
     address public feeRecipient;
-    // Fee percentage represented as an integer (e.g., 3 stands for 3%).
-    uint256 public feePercentage;
+    address public admin;
+    // Fee percentage stored in basis points (e.g., 300 = 3%)
+    uint256 public feeBasisPoints;
+    uint256 public constant BASIS_POINTS = 10000;
+    // USDC token address (for Ethereum mainnet: 0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48)
+    address public immutable usdcToken;
 
-    // Only a pre-approved external entity is permitted to invoke processing.
-    // This decouples on-chain logic from off-chain fee parameters.
-    address public authorizedCaller;
+    event FeeUpdated(uint256 newFeeBasisPoints);
+    // Updated event: now includes fullAmount along with netAmount and fee.
+    event DonationForwarded(
+        address indexed donor,
+        address indexed charity,
+        uint256 fullAmount, // The original donation amount.
+        uint256 netAmount, // The amount sent to the charity after fee deduction.
+        uint256 fee // The fee deducted.
+    );
 
-    // Emitted upon processing a fee; useful for tracking and off-chain analytics.
-    event FeeProcessed(uint256 feeAmount, uint256 remainingAmount);
-    // Emitted when the fee percentage is updated; ensures transparency.
-    event FeePercentageUpdated(uint256 newFeePercentage);
-
-    /// @notice Constructor initializes fee recipient and authorized processing caller.
-    /// @param _feeRecipient Address where fee funds are sent.
-    /// @param _authorizedCaller External address allowed to trigger fund processing.
-    constructor(address _feeRecipient, address _authorizedCaller) {
+    constructor(
+        address _feeRecipient,
+        uint256 _initialFeeBasisPoints,
+        address _usdcToken
+    ) {
+        require(_feeRecipient != address(0), "Invalid fee recipient");
         feeRecipient = _feeRecipient;
-        authorizedCaller = _authorizedCaller;
-        feePercentage = 3; // Establish a baseline fee of 3%.
+        admin = msg.sender;
+        feeBasisPoints = _initialFeeBasisPoints;
+        usdcToken = _usdcToken;
     }
 
-    /// @dev Restricts function access to the designated authorized caller.
-    modifier onlyAuthorized() {
-        require(msg.sender == authorizedCaller, "Not authorized");
+    modifier onlyAdmin() {
+        require(msg.sender == admin, "Not authorized");
         _;
     }
 
-    /// @notice Admin function to update the fee percentage.
-    /// @dev The fee is capped at 100 to prevent misconfiguration.
-    /// @param newFeePercentage New fee percentage (0-100).
-    function updateFeePercentage(uint256 newFeePercentage) external onlyOwner {
-        require(newFeePercentage <= 100, "Fee cannot exceed 100%");
-        feePercentage = newFeePercentage;
-        emit FeePercentageUpdated(newFeePercentage);
+    // Allows the admin to update the fee percentage.
+    function updateFee(uint256 _newFeeBasisPoints) external onlyAdmin {
+        require(_newFeeBasisPoints <= BASIS_POINTS, "Fee cannot exceed 100%");
+        feeBasisPoints = _newFeeBasisPoints;
+        emit FeeUpdated(_newFeeBasisPoints);
     }
 
-    /// @notice Processes incoming funds by deducting a fee.
-    /// @dev The off-chain provided fee percentage is validated before use.
-    /// @param feePercentOffChain Fee percentage parameter supplied off-chain.
-    function processFunds(uint256 feePercentOffChain) external payable onlyAuthorized {
-        // Sanity check: Ensure there is some ETH to process.
-        require(msg.value > 0, "No funds received");
-        // Validate that the provided fee percentage is within a reasonable range.
-        require(feePercentOffChain <= 100, "Invalid fee percentage");
+    /// @notice Processes a USDC donation with fee deduction.
+    /// @param donationAmount The total donation amount in USDC’s smallest units (6 decimals).
+    /// @param recipient The charity’s address to receive the net donation.
+    function sendWithFeeToken(
+        uint256 donationAmount,
+        address recipient
+    ) external {
+        require(donationAmount > 0, "Amount must be > 0");
 
-        // Calculate fee based on the off-chain provided percentage.
-        uint256 fee = (msg.value * feePercentOffChain) / 100;
-        // Determine the remaining funds post-fee.
-        uint256 remaining = msg.value - fee;
+        // Calculate fee and net amount.
+        uint256 fee = (donationAmount * feeBasisPoints) / BASIS_POINTS;
+        uint256 netAmount = donationAmount - fee;
 
-        // Execute transfer of the fee amount to the designated fee recipient.
-        payable(feeRecipient).transfer(fee);
+        IERC20 token = IERC20(usdcToken);
 
-        // Emit event for off-chain monitoring and audit trails.
-        emit FeeProcessed(fee, remaining);
+        // Pull the donation amount from the donor.
+        require(
+            token.transferFrom(msg.sender, address(this), donationAmount),
+            "Transfer from donor failed"
+        );
 
-        // Future scope: Additional processing logic (e.g., token conversion) can be appended here.
+        // Send the net donation to the charity.
+        require(token.transfer(recipient, netAmount), "Net transfer failed");
+
+        // Send the fee to the fee recipient.
+        require(token.transfer(feeRecipient, fee), "Fee transfer failed");
+
+        emit DonationForwarded(
+            msg.sender,
+            recipient,
+            donationAmount,
+            netAmount,
+            fee
+        );
     }
 }

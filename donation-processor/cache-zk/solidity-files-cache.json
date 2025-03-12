@@ -1,0 +1,1642 @@
+{
+  "_format": "hh-sol-cache-2",
+  "files": {
+    "C:\\Users\\dovin\\Projects\\charitywalletcontracts\\donation-processor\\contracts\\Contract.sol": {
+      "lastModificationDate": 1740002514643,
+      "contentHash": "cd513a0dae34740b075654c95275f40f",
+      "sourceName": "contracts/Contract.sol",
+      "solcConfig": {
+        "version": "0.8.23",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "@thirdweb-dev/contracts/prebuilts/account/managed/ManagedAccount.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.11"
+      ],
+      "artifacts": [
+        "FeeDeductingManagedAccount"
+      ]
+    },
+    "C:\\Users\\dovin\\Projects\\charitywalletcontracts\\donation-processor\\node_modules\\.pnpm\\@thirdweb-dev+contracts@3.15.0\\node_modules\\@thirdweb-dev\\contracts\\prebuilts\\account\\managed\\ManagedAccount.sol": {
+      "lastModificationDate": 1739826750667,
+      "contentHash": "0180376a24917cefcfd4d4154b14a5a2",
+      "sourceName": "@thirdweb-dev/contracts/prebuilts/account/managed/ManagedAccount.sol",
+      "solcConfig": {
+        "version": "0.8.23",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../utils/AccountCore.sol",
+        "@thirdweb-dev/dynamic-contracts/src/core/Router.sol",
+        "@thirdweb-dev/dynamic-contracts/src/interface/IRouterState.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.11"
+      ],
+      "artifacts": [
+        "ManagedAccount"
+      ]
+    },
+    "C:\\Users\\dovin\\Projects\\charitywalletcontracts\\donation-processor\\node_modules\\.pnpm\\@thirdweb-dev+contracts@3.15.0\\node_modules\\@thirdweb-dev\\contracts\\prebuilts\\account\\utils\\AccountCore.sol": {
+      "lastModificationDate": 1739826750498,
+      "contentHash": "d67d28f2fe1a9d1747b92fea97f26901",
+      "sourceName": "@thirdweb-dev/contracts/prebuilts/account/utils/AccountCore.sol",
+      "solcConfig": {
+        "version": "0.8.23",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./../utils/BaseAccount.sol",
+        "../../../extension/Multicall.sol",
+        "../../../extension/upgradeable/Initializable.sol",
+        "../../../extension/upgradeable/AccountPermissions.sol",
+        "./Helpers.sol",
+        "./AccountCoreStorage.sol",
+        "./BaseAccountFactory.sol",
+        "./AccountExtension.sol",
+        "../../../external-deps/openzeppelin/utils/cryptography/ECDSA.sol",
+        "../interface/IAccountCore.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.11"
+      ],
+      "artifacts": [
+        "AccountCore"
+      ]
+    },
+    "C:\\Users\\dovin\\Projects\\charitywalletcontracts\\donation-processor\\node_modules\\.pnpm\\@thirdweb-dev+dynamic-contracts@1.2.5\\node_modules\\@thirdweb-dev\\dynamic-contracts\\src\\core\\Router.sol": {
+      "lastModificationDate": 1739826749969,
+      "contentHash": "dae06da83ac653312b8946c8b09ac6fc",
+      "sourceName": "@thirdweb-dev/dynamic-contracts/src/core/Router.sol",
+      "solcConfig": {
+        "version": "0.8.23",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../interface/IRouter.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "Router"
+      ]
+    },
+    "C:\\Users\\dovin\\Projects\\charitywalletcontracts\\donation-processor\\node_modules\\.pnpm\\@thirdweb-dev+dynamic-contracts@1.2.5\\node_modules\\@thirdweb-dev\\dynamic-contracts\\src\\interface\\IRouterState.sol": {
+      "lastModificationDate": 1739826749994,
+      "contentHash": "a5a12dcc25720f7e2a51b4e4ea016b8e",
+      "sourceName": "@thirdweb-dev/dynamic-contracts/src/interface/IRouterState.sol",
+      "solcConfig": {
+        "version": "0.8.23",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./IExtension.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "IRouterState"
+      ]
+    },
+    "C:\\Users\\dovin\\Projects\\charitywalletcontracts\\donation-processor\\node_modules\\.pnpm\\@thirdweb-dev+contracts@3.15.0\\node_modules\\@thirdweb-dev\\contracts\\extension\\Multicall.sol": {
+      "lastModificationDate": 1739826750671,
+      "contentHash": "c4d4a9bf7e77098451db819ce6c358a5",
+      "sourceName": "@thirdweb-dev/contracts/extension/Multicall.sol",
+      "solcConfig": {
+        "version": "0.8.23",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../lib/Address.sol",
+        "./interface/IMulticall.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "Multicall"
+      ]
+    },
+    "C:\\Users\\dovin\\Projects\\charitywalletcontracts\\donation-processor\\node_modules\\.pnpm\\@thirdweb-dev+contracts@3.15.0\\node_modules\\@thirdweb-dev\\contracts\\extension\\upgradeable\\AccountPermissions.sol": {
+      "lastModificationDate": 1739826750500,
+      "contentHash": "a7e571e4670ce3ce3f33d5398f42ea5a",
+      "sourceName": "@thirdweb-dev/contracts/extension/upgradeable/AccountPermissions.sol",
+      "solcConfig": {
+        "version": "0.8.23",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../interface/IAccountPermissions.sol",
+        "../../external-deps/openzeppelin/utils/cryptography/EIP712.sol",
+        "../../external-deps/openzeppelin/utils/structs/EnumerableSet.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "AccountPermissions",
+        "AccountPermissionsStorage"
+      ]
+    },
+    "C:\\Users\\dovin\\Projects\\charitywalletcontracts\\donation-processor\\node_modules\\.pnpm\\@thirdweb-dev+contracts@3.15.0\\node_modules\\@thirdweb-dev\\contracts\\extension\\upgradeable\\Initializable.sol": {
+      "lastModificationDate": 1739826750641,
+      "contentHash": "3c7962e72ad77eeefa33b9be697c5650",
+      "sourceName": "@thirdweb-dev/contracts/extension/upgradeable/Initializable.sol",
+      "solcConfig": {
+        "version": "0.8.23",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../../lib/Address.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "InitStorage",
+        "Initializable"
+      ]
+    },
+    "C:\\Users\\dovin\\Projects\\charitywalletcontracts\\donation-processor\\node_modules\\.pnpm\\@thirdweb-dev+contracts@3.15.0\\node_modules\\@thirdweb-dev\\contracts\\prebuilts\\account\\utils\\BaseAccount.sol": {
+      "lastModificationDate": 1739826750509,
+      "contentHash": "51b0cf92e6b54cecabb983f9f38ba138",
+      "sourceName": "@thirdweb-dev/contracts/prebuilts/account/utils/BaseAccount.sol",
+      "solcConfig": {
+        "version": "0.8.23",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../interface/IAccount.sol",
+        "../interface/IEntrypoint.sol",
+        "./Helpers.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.12"
+      ],
+      "artifacts": [
+        "BaseAccount"
+      ]
+    },
+    "C:\\Users\\dovin\\Projects\\charitywalletcontracts\\donation-processor\\node_modules\\.pnpm\\@thirdweb-dev+contracts@3.15.0\\node_modules\\@thirdweb-dev\\contracts\\prebuilts\\account\\interface\\IAccountCore.sol": {
+      "lastModificationDate": 1739826750582,
+      "contentHash": "afb060df6fb45da57a248436301762f5",
+      "sourceName": "@thirdweb-dev/contracts/prebuilts/account/interface/IAccountCore.sol",
+      "solcConfig": {
+        "version": "0.8.23",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./IAccount.sol",
+        "../../../extension/interface/IAccountPermissions.sol",
+        "../../../extension/interface/IMulticall.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.12"
+      ],
+      "artifacts": [
+        "IAccountCore"
+      ]
+    },
+    "C:\\Users\\dovin\\Projects\\charitywalletcontracts\\donation-processor\\node_modules\\.pnpm\\@thirdweb-dev+contracts@3.15.0\\node_modules\\@thirdweb-dev\\contracts\\external-deps\\openzeppelin\\utils\\cryptography\\ECDSA.sol": {
+      "lastModificationDate": 1739826750536,
+      "contentHash": "b2f1848eb237613694d2a2ef81db5ba9",
+      "sourceName": "@thirdweb-dev/contracts/external-deps/openzeppelin/utils/cryptography/ECDSA.sol",
+      "solcConfig": {
+        "version": "0.8.23",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../../../../lib/Strings.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "ECDSA"
+      ]
+    },
+    "C:\\Users\\dovin\\Projects\\charitywalletcontracts\\donation-processor\\node_modules\\.pnpm\\@thirdweb-dev+contracts@3.15.0\\node_modules\\@thirdweb-dev\\contracts\\prebuilts\\account\\utils\\Helpers.sol": {
+      "lastModificationDate": 1739826750580,
+      "contentHash": "b9eaf8bda096299da7d23cb0c12a3cf0",
+      "sourceName": "@thirdweb-dev/contracts/prebuilts/account/utils/Helpers.sol",
+      "solcConfig": {
+        "version": "0.8.23",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.12"
+      ],
+      "artifacts": []
+    },
+    "C:\\Users\\dovin\\Projects\\charitywalletcontracts\\donation-processor\\node_modules\\.pnpm\\@thirdweb-dev+contracts@3.15.0\\node_modules\\@thirdweb-dev\\contracts\\prebuilts\\account\\utils\\AccountCoreStorage.sol": {
+      "lastModificationDate": 1739826750499,
+      "contentHash": "b52b981789c083c9e9ea7bb95c302572",
+      "sourceName": "@thirdweb-dev/contracts/prebuilts/account/utils/AccountCoreStorage.sol",
+      "solcConfig": {
+        "version": "0.8.23",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.11"
+      ],
+      "artifacts": [
+        "AccountCoreStorage"
+      ]
+    },
+    "C:\\Users\\dovin\\Projects\\charitywalletcontracts\\donation-processor\\node_modules\\.pnpm\\@thirdweb-dev+contracts@3.15.0\\node_modules\\@thirdweb-dev\\contracts\\prebuilts\\account\\utils\\AccountExtension.sol": {
+      "lastModificationDate": 1739826750499,
+      "contentHash": "08e55e7c1d5851a8e4489214513347a1",
+      "sourceName": "@thirdweb-dev/contracts/prebuilts/account/utils/AccountExtension.sol",
+      "solcConfig": {
+        "version": "0.8.23",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../../../extension/upgradeable/AccountPermissions.sol",
+        "../../../extension/upgradeable/ContractMetadata.sol",
+        "../../../external-deps/openzeppelin/token/ERC721/utils/ERC721Holder.sol",
+        "../../../external-deps/openzeppelin/token/ERC1155/utils/ERC1155Holder.sol",
+        "../../../eip/ERC1271.sol",
+        "../../../external-deps/openzeppelin/utils/cryptography/ECDSA.sol",
+        "../../../external-deps/openzeppelin/utils/structs/EnumerableSet.sol",
+        "./BaseAccountFactory.sol",
+        "./AccountCore.sol",
+        "./AccountCoreStorage.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.11"
+      ],
+      "artifacts": [
+        "AccountExtension"
+      ]
+    },
+    "C:\\Users\\dovin\\Projects\\charitywalletcontracts\\donation-processor\\node_modules\\.pnpm\\@thirdweb-dev+contracts@3.15.0\\node_modules\\@thirdweb-dev\\contracts\\prebuilts\\account\\utils\\BaseAccountFactory.sol": {
+      "lastModificationDate": 1739826750510,
+      "contentHash": "93bd222c66c63e1a30766ceb8b83483a",
+      "sourceName": "@thirdweb-dev/contracts/prebuilts/account/utils/BaseAccountFactory.sol",
+      "solcConfig": {
+        "version": "0.8.23",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../../../extension/Multicall.sol",
+        "../../../external-deps/openzeppelin/proxy/Clones.sol",
+        "../../../external-deps/openzeppelin/utils/structs/EnumerableSet.sol",
+        "../utils/BaseAccount.sol",
+        "../../../extension/interface/IAccountPermissions.sol",
+        "../../../lib/BytesLib.sol",
+        "../interface/IEntrypoint.sol",
+        "../interface/IAccountFactory.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.12"
+      ],
+      "artifacts": [
+        "BaseAccountFactory"
+      ]
+    },
+    "C:\\Users\\dovin\\Projects\\charitywalletcontracts\\donation-processor\\node_modules\\.pnpm\\@thirdweb-dev+contracts@3.15.0\\node_modules\\@thirdweb-dev\\contracts\\lib\\Address.sol": {
+      "lastModificationDate": 1739826750502,
+      "contentHash": "22b987ca54f63bdccbf92cf52478d9a0",
+      "sourceName": "@thirdweb-dev/contracts/lib/Address.sol",
+      "solcConfig": {
+        "version": "0.8.23",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.1"
+      ],
+      "artifacts": [
+        "Address"
+      ]
+    },
+    "C:\\Users\\dovin\\Projects\\charitywalletcontracts\\donation-processor\\node_modules\\.pnpm\\@thirdweb-dev+contracts@3.15.0\\node_modules\\@thirdweb-dev\\contracts\\extension\\interface\\IMulticall.sol": {
+      "lastModificationDate": 1739826750638,
+      "contentHash": "f940a79d3555cb15335797309e63f5d2",
+      "sourceName": "@thirdweb-dev/contracts/extension/interface/IMulticall.sol",
+      "solcConfig": {
+        "version": "0.8.23",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "IMulticall"
+      ]
+    },
+    "C:\\Users\\dovin\\Projects\\charitywalletcontracts\\donation-processor\\node_modules\\.pnpm\\@thirdweb-dev+contracts@3.15.0\\node_modules\\@thirdweb-dev\\contracts\\extension\\interface\\IAccountPermissions.sol": {
+      "lastModificationDate": 1739826750585,
+      "contentHash": "c1f3a3e6eb689348b0db35c5747ee084",
+      "sourceName": "@thirdweb-dev/contracts/extension/interface/IAccountPermissions.sol",
+      "solcConfig": {
+        "version": "0.8.23",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "IAccountPermissions"
+      ]
+    },
+    "C:\\Users\\dovin\\Projects\\charitywalletcontracts\\donation-processor\\node_modules\\.pnpm\\@thirdweb-dev+contracts@3.15.0\\node_modules\\@thirdweb-dev\\contracts\\external-deps\\openzeppelin\\utils\\cryptography\\EIP712.sol": {
+      "lastModificationDate": 1739826750537,
+      "contentHash": "161aae4dc1450371d0f324488f66a9cf",
+      "sourceName": "@thirdweb-dev/contracts/external-deps/openzeppelin/utils/cryptography/EIP712.sol",
+      "solcConfig": {
+        "version": "0.8.23",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./ECDSA.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "EIP712"
+      ]
+    },
+    "C:\\Users\\dovin\\Projects\\charitywalletcontracts\\donation-processor\\node_modules\\.pnpm\\@thirdweb-dev+contracts@3.15.0\\node_modules\\@thirdweb-dev\\contracts\\external-deps\\openzeppelin\\utils\\structs\\EnumerableSet.sol": {
+      "lastModificationDate": 1739826750541,
+      "contentHash": "aec6e37069dfaa5e3d5fd66ef2274b0c",
+      "sourceName": "@thirdweb-dev/contracts/external-deps/openzeppelin/utils/structs/EnumerableSet.sol",
+      "solcConfig": {
+        "version": "0.8.23",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "EnumerableSet"
+      ]
+    },
+    "C:\\Users\\dovin\\Projects\\charitywalletcontracts\\donation-processor\\node_modules\\.pnpm\\@thirdweb-dev+contracts@3.15.0\\node_modules\\@thirdweb-dev\\contracts\\lib\\Strings.sol": {
+      "lastModificationDate": 1739826750723,
+      "contentHash": "96ccf769fa54976a6d439d8fe2cb0f93",
+      "sourceName": "@thirdweb-dev/contracts/lib/Strings.sol",
+      "solcConfig": {
+        "version": "0.8.23",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "Strings"
+      ]
+    },
+    "C:\\Users\\dovin\\Projects\\charitywalletcontracts\\donation-processor\\node_modules\\.pnpm\\@thirdweb-dev+contracts@3.15.0\\node_modules\\@thirdweb-dev\\contracts\\prebuilts\\account\\interface\\IEntrypoint.sol": {
+      "lastModificationDate": 1739826750617,
+      "contentHash": "a4a5286a1597ae359ec6c123548b9f1f",
+      "sourceName": "@thirdweb-dev/contracts/prebuilts/account/interface/IEntrypoint.sol",
+      "solcConfig": {
+        "version": "0.8.23",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../utils/UserOperation.sol",
+        "./IStakeManager.sol",
+        "./IAggregator.sol",
+        "./INonceManager.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.12"
+      ],
+      "artifacts": [
+        "IEntryPoint"
+      ]
+    },
+    "C:\\Users\\dovin\\Projects\\charitywalletcontracts\\donation-processor\\node_modules\\.pnpm\\@thirdweb-dev+contracts@3.15.0\\node_modules\\@thirdweb-dev\\contracts\\prebuilts\\account\\interface\\IAccount.sol": {
+      "lastModificationDate": 1739826750581,
+      "contentHash": "e479b355e297e9df67b91884c880bd44",
+      "sourceName": "@thirdweb-dev/contracts/prebuilts/account/interface/IAccount.sol",
+      "solcConfig": {
+        "version": "0.8.23",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../utils/UserOperation.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.12"
+      ],
+      "artifacts": [
+        "IAccount"
+      ]
+    },
+    "C:\\Users\\dovin\\Projects\\charitywalletcontracts\\donation-processor\\node_modules\\.pnpm\\@thirdweb-dev+contracts@3.15.0\\node_modules\\@thirdweb-dev\\contracts\\prebuilts\\account\\utils\\UserOperation.sol": {
+      "lastModificationDate": 1739826750736,
+      "contentHash": "2a68bea81dca73db694bfe1236d592fd",
+      "sourceName": "@thirdweb-dev/contracts/prebuilts/account/utils/UserOperation.sol",
+      "solcConfig": {
+        "version": "0.8.23",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./Helpers.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.12"
+      ],
+      "artifacts": [
+        "UserOperationLib"
+      ]
+    },
+    "C:\\Users\\dovin\\Projects\\charitywalletcontracts\\donation-processor\\node_modules\\.pnpm\\@thirdweb-dev+contracts@3.15.0\\node_modules\\@thirdweb-dev\\contracts\\prebuilts\\account\\interface\\IAggregator.sol": {
+      "lastModificationDate": 1739826750585,
+      "contentHash": "a5ced03490524c6653d676c6161e19ec",
+      "sourceName": "@thirdweb-dev/contracts/prebuilts/account/interface/IAggregator.sol",
+      "solcConfig": {
+        "version": "0.8.23",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../utils/UserOperation.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.12"
+      ],
+      "artifacts": [
+        "IAggregator"
+      ]
+    },
+    "C:\\Users\\dovin\\Projects\\charitywalletcontracts\\donation-processor\\node_modules\\.pnpm\\@thirdweb-dev+contracts@3.15.0\\node_modules\\@thirdweb-dev\\contracts\\prebuilts\\account\\interface\\IStakeManager.sol": {
+      "lastModificationDate": 1739826750655,
+      "contentHash": "459fb26b3301bff550d65bc07c3a37f2",
+      "sourceName": "@thirdweb-dev/contracts/prebuilts/account/interface/IStakeManager.sol",
+      "solcConfig": {
+        "version": "0.8.23",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.12"
+      ],
+      "artifacts": [
+        "IStakeManager"
+      ]
+    },
+    "C:\\Users\\dovin\\Projects\\charitywalletcontracts\\donation-processor\\node_modules\\.pnpm\\@thirdweb-dev+contracts@3.15.0\\node_modules\\@thirdweb-dev\\contracts\\prebuilts\\account\\interface\\INonceManager.sol": {
+      "lastModificationDate": 1739826750642,
+      "contentHash": "e79dac16b33acff16cfc8b99eae14430",
+      "sourceName": "@thirdweb-dev/contracts/prebuilts/account/interface/INonceManager.sol",
+      "solcConfig": {
+        "version": "0.8.23",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.12"
+      ],
+      "artifacts": [
+        "INonceManager"
+      ]
+    },
+    "C:\\Users\\dovin\\Projects\\charitywalletcontracts\\donation-processor\\node_modules\\.pnpm\\@thirdweb-dev+contracts@3.15.0\\node_modules\\@thirdweb-dev\\contracts\\eip\\ERC1271.sol": {
+      "lastModificationDate": 1739826750549,
+      "contentHash": "93aaf29465753c712c65ee06018aec9e",
+      "sourceName": "@thirdweb-dev/contracts/eip/ERC1271.sol",
+      "solcConfig": {
+        "version": "0.8.23",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "ERC1271"
+      ]
+    },
+    "C:\\Users\\dovin\\Projects\\charitywalletcontracts\\donation-processor\\node_modules\\.pnpm\\@thirdweb-dev+contracts@3.15.0\\node_modules\\@thirdweb-dev\\contracts\\extension\\upgradeable\\ContractMetadata.sol": {
+      "lastModificationDate": 1739826750519,
+      "contentHash": "c6f16c1c00c19c1b920b627631019de9",
+      "sourceName": "@thirdweb-dev/contracts/extension/upgradeable/ContractMetadata.sol",
+      "solcConfig": {
+        "version": "0.8.23",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../interface/IContractMetadata.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "ContractMetadata",
+        "ContractMetadataStorage"
+      ]
+    },
+    "C:\\Users\\dovin\\Projects\\charitywalletcontracts\\donation-processor\\node_modules\\.pnpm\\@thirdweb-dev+contracts@3.15.0\\node_modules\\@thirdweb-dev\\contracts\\external-deps\\openzeppelin\\token\\ERC721\\utils\\ERC721Holder.sol": {
+      "lastModificationDate": 1739826750572,
+      "contentHash": "a61386e29a71a8fbed0556494a41e7a8",
+      "sourceName": "@thirdweb-dev/contracts/external-deps/openzeppelin/token/ERC721/utils/ERC721Holder.sol",
+      "solcConfig": {
+        "version": "0.8.23",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../IERC721Receiver.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "ERC721Holder"
+      ]
+    },
+    "C:\\Users\\dovin\\Projects\\charitywalletcontracts\\donation-processor\\node_modules\\.pnpm\\@thirdweb-dev+contracts@3.15.0\\node_modules\\@thirdweb-dev\\contracts\\external-deps\\openzeppelin\\token\\ERC1155\\utils\\ERC1155Holder.sol": {
+      "lastModificationDate": 1739826750544,
+      "contentHash": "88079762e28b246888129028f757e047",
+      "sourceName": "@thirdweb-dev/contracts/external-deps/openzeppelin/token/ERC1155/utils/ERC1155Holder.sol",
+      "solcConfig": {
+        "version": "0.8.23",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./ERC1155Receiver.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "ERC1155Holder"
+      ]
+    },
+    "C:\\Users\\dovin\\Projects\\charitywalletcontracts\\donation-processor\\node_modules\\.pnpm\\@thirdweb-dev+contracts@3.15.0\\node_modules\\@thirdweb-dev\\contracts\\lib\\BytesLib.sol": {
+      "lastModificationDate": 1739826750517,
+      "contentHash": "bdd569c080fadc12dbd30ae88cf0aa74",
+      "sourceName": "@thirdweb-dev/contracts/lib/BytesLib.sol",
+      "solcConfig": {
+        "version": "0.8.23",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "BytesLib"
+      ]
+    },
+    "C:\\Users\\dovin\\Projects\\charitywalletcontracts\\donation-processor\\node_modules\\.pnpm\\@thirdweb-dev+contracts@3.15.0\\node_modules\\@thirdweb-dev\\contracts\\external-deps\\openzeppelin\\proxy\\Clones.sol": {
+      "lastModificationDate": 1739826750517,
+      "contentHash": "619ebe6b259dbac8eddc7df5a8a380c1",
+      "sourceName": "@thirdweb-dev/contracts/external-deps/openzeppelin/proxy/Clones.sol",
+      "solcConfig": {
+        "version": "0.8.23",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "Clones"
+      ]
+    },
+    "C:\\Users\\dovin\\Projects\\charitywalletcontracts\\donation-processor\\node_modules\\.pnpm\\@thirdweb-dev+contracts@3.15.0\\node_modules\\@thirdweb-dev\\contracts\\prebuilts\\account\\interface\\IAccountFactory.sol": {
+      "lastModificationDate": 1739826750583,
+      "contentHash": "84c9a81eebb936663a9c9601ec0320f4",
+      "sourceName": "@thirdweb-dev/contracts/prebuilts/account/interface/IAccountFactory.sol",
+      "solcConfig": {
+        "version": "0.8.23",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./IAccountFactoryCore.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.12"
+      ],
+      "artifacts": [
+        "IAccountFactory"
+      ]
+    },
+    "C:\\Users\\dovin\\Projects\\charitywalletcontracts\\donation-processor\\node_modules\\.pnpm\\@thirdweb-dev+contracts@3.15.0\\node_modules\\@thirdweb-dev\\contracts\\prebuilts\\account\\interface\\IAccountFactoryCore.sol": {
+      "lastModificationDate": 1739826750584,
+      "contentHash": "326f82a3eb30f937fd12820a75105794",
+      "sourceName": "@thirdweb-dev/contracts/prebuilts/account/interface/IAccountFactoryCore.sol",
+      "solcConfig": {
+        "version": "0.8.23",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.12"
+      ],
+      "artifacts": [
+        "IAccountFactoryCore"
+      ]
+    },
+    "C:\\Users\\dovin\\Projects\\charitywalletcontracts\\donation-processor\\node_modules\\.pnpm\\@thirdweb-dev+contracts@3.15.0\\node_modules\\@thirdweb-dev\\contracts\\extension\\interface\\IContractMetadata.sol": {
+      "lastModificationDate": 1739826750602,
+      "contentHash": "6cffce9927c3dacc15ccc20ee5a1d89e",
+      "sourceName": "@thirdweb-dev/contracts/extension/interface/IContractMetadata.sol",
+      "solcConfig": {
+        "version": "0.8.23",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "IContractMetadata"
+      ]
+    },
+    "C:\\Users\\dovin\\Projects\\charitywalletcontracts\\donation-processor\\node_modules\\.pnpm\\@thirdweb-dev+contracts@3.15.0\\node_modules\\@thirdweb-dev\\contracts\\external-deps\\openzeppelin\\token\\ERC721\\IERC721Receiver.sol": {
+      "lastModificationDate": 1739826750632,
+      "contentHash": "592df588492d45fdcf46b3cb608c0fbf",
+      "sourceName": "@thirdweb-dev/contracts/external-deps/openzeppelin/token/ERC721/IERC721Receiver.sol",
+      "solcConfig": {
+        "version": "0.8.23",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "IERC721Receiver"
+      ]
+    },
+    "C:\\Users\\dovin\\Projects\\charitywalletcontracts\\donation-processor\\node_modules\\.pnpm\\@thirdweb-dev+contracts@3.15.0\\node_modules\\@thirdweb-dev\\contracts\\external-deps\\openzeppelin\\token\\ERC1155\\utils\\ERC1155Receiver.sol": {
+      "lastModificationDate": 1739826750547,
+      "contentHash": "1cf85c2e13ef77fcc4eaaee8dfb167eb",
+      "sourceName": "@thirdweb-dev/contracts/external-deps/openzeppelin/token/ERC1155/utils/ERC1155Receiver.sol",
+      "solcConfig": {
+        "version": "0.8.23",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../IERC1155Receiver.sol",
+        "../../../../../eip/ERC165.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "ERC1155Receiver"
+      ]
+    },
+    "C:\\Users\\dovin\\Projects\\charitywalletcontracts\\donation-processor\\node_modules\\.pnpm\\@thirdweb-dev+contracts@3.15.0\\node_modules\\@thirdweb-dev\\contracts\\eip\\ERC165.sol": {
+      "lastModificationDate": 1739826750550,
+      "contentHash": "e4fa0042febfbf7ba6686dd4d1f5da9a",
+      "sourceName": "@thirdweb-dev/contracts/eip/ERC165.sol",
+      "solcConfig": {
+        "version": "0.8.23",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./interface/IERC165.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "ERC165"
+      ]
+    },
+    "C:\\Users\\dovin\\Projects\\charitywalletcontracts\\donation-processor\\node_modules\\.pnpm\\@thirdweb-dev+contracts@3.15.0\\node_modules\\@thirdweb-dev\\contracts\\external-deps\\openzeppelin\\token\\ERC1155\\IERC1155Receiver.sol": {
+      "lastModificationDate": 1739826750621,
+      "contentHash": "b5f79992e3ebaf06b3576766741e2910",
+      "sourceName": "@thirdweb-dev/contracts/external-deps/openzeppelin/token/ERC1155/IERC1155Receiver.sol",
+      "solcConfig": {
+        "version": "0.8.23",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../../../../eip/interface/IERC165.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "IERC1155Receiver"
+      ]
+    },
+    "C:\\Users\\dovin\\Projects\\charitywalletcontracts\\donation-processor\\node_modules\\.pnpm\\@thirdweb-dev+contracts@3.15.0\\node_modules\\@thirdweb-dev\\contracts\\eip\\interface\\IERC165.sol": {
+      "lastModificationDate": 1739826750622,
+      "contentHash": "4ab7601799d3c6f785e6a6163975ea66",
+      "sourceName": "@thirdweb-dev/contracts/eip/interface/IERC165.sol",
+      "solcConfig": {
+        "version": "0.8.23",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "IERC165"
+      ]
+    },
+    "C:\\Users\\dovin\\Projects\\charitywalletcontracts\\donation-processor\\node_modules\\.pnpm\\@thirdweb-dev+dynamic-contracts@1.2.5\\node_modules\\@thirdweb-dev\\dynamic-contracts\\src\\interface\\IRouter.sol": {
+      "lastModificationDate": 1739826749989,
+      "contentHash": "6a2923e249bb527d8769b5f7354314b8",
+      "sourceName": "@thirdweb-dev/dynamic-contracts/src/interface/IRouter.sol",
+      "solcConfig": {
+        "version": "0.8.23",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "IRouter"
+      ]
+    },
+    "C:\\Users\\dovin\\Projects\\charitywalletcontracts\\donation-processor\\node_modules\\.pnpm\\@thirdweb-dev+dynamic-contracts@1.2.5\\node_modules\\@thirdweb-dev\\dynamic-contracts\\src\\interface\\IExtension.sol": {
+      "lastModificationDate": 1739826749983,
+      "contentHash": "6750c575e768e805741d336a815f6da5",
+      "sourceName": "@thirdweb-dev/dynamic-contracts/src/interface/IExtension.sol",
+      "solcConfig": {
+        "version": "0.8.23",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "IExtension"
+      ]
+    }
+  }
+}
