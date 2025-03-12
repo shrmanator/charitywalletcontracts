@@ -9,7 +9,7 @@ importers:
   .:
     dependencies:
       '@thirdweb-dev/contracts':
-        specifier: ^3.15.0
+        specifier: ^3.8.0
         version: 3.15.0
       zksync-ethers:
         specifier: ^5.7.0
