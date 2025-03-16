@@ -14,17 +14,15 @@ interface IERC20 {
     ) external returns (bool);
 }
 
-contract FeeDeductionUSDC {
+contract FeeDeduction {
     address public feeRecipient;
     address public admin;
     // Fee percentage stored in basis points (e.g., 300 = 3%)
     uint256 public feeBasisPoints;
     uint256 public constant BASIS_POINTS = 10000;
-    // USDC token address (for Ethereum mainnet: 0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48)
-    address public immutable usdcToken;
 
     event FeeUpdated(uint256 newFeeBasisPoints);
-    // Updated event: now includes fullAmount along with netAmount and fee.
+    // Emitted when a donation is forwarded after fee deduction.
     event DonationForwarded(
         address indexed donor,
         address indexed charity,
@@ -33,16 +31,11 @@ contract FeeDeductionUSDC {
         uint256 fee // The fee deducted.
     );
 
-    constructor(
-        address _feeRecipient,
-        uint256 _initialFeeBasisPoints,
-        address _usdcToken
-    ) {
+    constructor(address _feeRecipient, uint256 _initialFeeBasisPoints) {
         require(_feeRecipient != address(0), "Invalid fee recipient");
         feeRecipient = _feeRecipient;
         admin = msg.sender;
         feeBasisPoints = _initialFeeBasisPoints;
-        usdcToken = _usdcToken;
     }
 
     modifier onlyAdmin() {
@@ -57,12 +50,14 @@ contract FeeDeductionUSDC {
         emit FeeUpdated(_newFeeBasisPoints);
     }
 
-    /// @notice Processes a USDC donation with fee deduction.
-    /// @param donationAmount The total donation amount in USDC’s smallest units (6 decimals).
+    /// @notice Processes a donation with fee deduction using a specified ERC20 token.
+    /// @param donationAmount The total donation amount in the token's smallest units.
     /// @param recipient The charity’s address to receive the net donation.
+    /// @param tokenAddress The ERC20 token address to use for the donation.
     function sendWithFeeToken(
         uint256 donationAmount,
-        address recipient
+        address recipient,
+        address tokenAddress
     ) external {
         require(donationAmount > 0, "Amount must be > 0");
 
@@ -70,7 +65,7 @@ contract FeeDeductionUSDC {
         uint256 fee = (donationAmount * feeBasisPoints) / BASIS_POINTS;
         uint256 netAmount = donationAmount - fee;
 
-        IERC20 token = IERC20(usdcToken);
+        IERC20 token = IERC20(tokenAddress);
 
         // Pull the donation amount from the donor.
         require(
