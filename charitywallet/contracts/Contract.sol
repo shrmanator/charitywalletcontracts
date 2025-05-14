@@ -5,7 +5,7 @@ import "@uniswap/v3-periphery/contracts/interfaces/ISwapRouter.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 /// @title Universal Donation Swap
-/// @notice Swaps incoming ETH to USDC and splits proceeds between charity and platform
+/// @notice Swaps incoming ETH to USDC, splits proceeds, and emits donation events
 contract UniversalDonationSwap {
     ISwapRouter public immutable swapRouter;
     IERC20 public immutable usdc;
@@ -14,8 +14,20 @@ contract UniversalDonationSwap {
     uint16 public constant FEE_BP = 300;
     uint16 public constant BP_DIV = 10000;
 
-    /// @param _swapRouter Address of the Uniswap V3 router
-    /// @param _usdc       Address of the USDC token contract
+    /// @dev Emitted after a successful donation swap
+    /// @param donor       The address that sent the ETH
+    /// @param charity     The recipient of the net USDC amount
+    /// @param fullAmount  Total USDC received from the swap
+    /// @param netAmount   USDC forwarded to the charity (97%)
+    /// @param fee         USDC forwarded as platform fee (3%)
+    event DonationForwarded(
+        address indexed donor,
+        address indexed charity,
+        uint256 fullAmount,
+        uint256 netAmount,
+        uint256 fee
+    );
+
     constructor(address _swapRouter, address _usdc) {
         require(_swapRouter != address(0), "Invalid router address");
         require(_usdc != address(0), "Invalid USDC address");
@@ -23,10 +35,10 @@ contract UniversalDonationSwap {
         usdc = IERC20(_usdc);
     }
 
-    /// @notice Donate ETH, swap to USDC, send 97% to charity and 3% to platform
-    /// @param _charity  Recipient address for the charity share (97%)
-    /// @param _platform Recipient address for the platform fee (3%)
-    /// @param _poolFee  Uniswap V3 pool fee tier (e.g. 3000 for 0.3%)
+    /// @notice Donate ETH → swap → send USDC (97%→charity, 3%→platform)
+    /// @param _charity    Recipient address for the charity share (97%)
+    /// @param _platform   Recipient address for the platform fee (3%)
+    /// @param _poolFee    Uniswap V3 pool fee tier (e.g. 3000 for 0.3%)
     function donateAndSwap(
         address _charity,
         address _platform,
@@ -55,11 +67,20 @@ contract UniversalDonationSwap {
         uint256 feeUsdc = (totalUsdc * FEE_BP) / BP_DIV;
         uint256 charityUsdc = totalUsdc - feeUsdc;
 
-        // 3) Transfer USDC shares
+        // 3) Distribute USDC shares
         require(usdc.transfer(_platform, feeUsdc), "Fee transfer failed");
         require(
             usdc.transfer(_charity, charityUsdc),
             "Charity transfer failed"
+        );
+
+        // 4) Emit event for off-chain indexing
+        emit DonationForwarded(
+            msg.sender,
+            _charity,
+            totalUsdc,
+            charityUsdc,
+            feeUsdc
         );
     }
 
