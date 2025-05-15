@@ -1,89 +1,124 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.0;
+pragma solidity ^0.8.12;
 
+import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
+import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import "@uniswap/v3-periphery/contracts/interfaces/ISwapRouter.sol";
-import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
-/// @title Universal Donation Swap
-/// @notice Swaps incoming ETH to USDC, splits proceeds, and emits donation events
-contract UniversalDonationSwap {
+/**
+ * @title FeeSwap (ETH → USDC)
+ * @notice Accepts an **ETH** donation, swaps it to **USDC** on Uniswap V3,
+ *         then pays a platform fee and forwards the rest to the charity.
+ */
+contract FeeSwapEth is ReentrancyGuard {
+    using SafeERC20 for IERC20;
+
+    // ───────────────────────────  storage  ────────────────────────────
+
+    /// Platform wallet that receives the raw‑ETH fee
+    address payable public feeRecipient;
+
+    /// Uniswap V3 router (same address on all chains that support V3)
     ISwapRouter public immutable swapRouter;
-    IERC20 public immutable usdc;
 
-    // Fee in basis points (3% = 300 bp)
-    uint16 public constant FEE_BP = 300;
-    uint16 public constant BP_DIV = 10000;
+    /// Fee in basis points (parts per 10 000)
+    uint256 public feeBasisPoints;
+    uint256 public constant BASIS_POINTS = 10_000;
 
-    /// @dev Emitted after a successful donation swap
-    /// @param donor       The address that sent the ETH
-    /// @param charity     The recipient of the net USDC amount
-    /// @param fullAmount  Total USDC received from the swap
-    /// @param netAmount   USDC forwarded to the charity (97%)
-    /// @param fee         USDC forwarded as platform fee (3%)
+    /// Ethereum WETH9 (wrapped ETH)
+    address public constant WETH9 = 0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2;
+    /// Ethereum USDC
+    address public constant USDC = 0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48;
+
+    // ───────────────────────────  events  ─────────────────────────────
+
+    event FeeUpdated(uint256 newFeeBasisPoints);
     event DonationForwarded(
         address indexed donor,
         address indexed charity,
-        uint256 fullAmount,
-        uint256 netAmount,
-        uint256 fee
+        uint256 grossEth,
+        uint256 netEth,
+        uint256 feeEth
     );
 
-    constructor(address _swapRouter, address _usdc) {
-        require(_swapRouter != address(0), "Invalid router address");
-        require(_usdc != address(0), "Invalid USDC address");
+    // ─────────────────────────  constructor  ──────────────────────────
+
+    /**
+     * @param _feeRecipient         Wallet that captures the fee (in raw ETH)
+     * @param _initialFeeBasisPoints 0 – 10 000 (e.g. 300 = 3 %)
+     * @param _swapRouter           Uniswap V3 router address
+     */
+    constructor(
+        address payable _feeRecipient,
+        uint256 _initialFeeBasisPoints,
+        address _swapRouter
+    ) {
+        require(_feeRecipient != address(0), "Invalid fee recipient");
+        require(_initialFeeBasisPoints <= BASIS_POINTS, "Fee > 100%");
+        feeRecipient = _feeRecipient;
+        feeBasisPoints = _initialFeeBasisPoints;
         swapRouter = ISwapRouter(_swapRouter);
-        usdc = IERC20(_usdc);
     }
 
-    /// @notice Donate ETH → swap → send USDC (97%→charity, 3%→platform)
-    /// @param _charity    Recipient address for the charity share (97%)
-    /// @param _platform   Recipient address for the platform fee (3%)
-    /// @param _poolFee    Uniswap V3 pool fee tier (e.g. 3000 for 0.3%)
-    function donateAndSwap(
-        address _charity,
-        address _platform,
-        uint24 _poolFee
-    ) external payable {
-        require(msg.value > 0, "No ETH sent");
-        require(_charity != address(0), "Invalid charity address");
-        require(_platform != address(0), "Invalid platform address");
+    // ────────────────────────────  admin  ─────────────────────────────
 
-        // 1) Swap entire ETH → USDC, and receive USDC to this contract
+    modifier onlyAdmin() {
+        require(msg.sender == feeRecipient, "Not authorized");
+        _;
+    }
+
+    function updateFee(uint256 _bps) external onlyAdmin {
+        require(_bps <= BASIS_POINTS, "Fee > 100%");
+        feeBasisPoints = _bps;
+        emit FeeUpdated(_bps);
+    }
+
+    // ───────────────────────────  main flow  ──────────────────────────
+
+    /**
+     * @notice Donate **ETH** → swap to **USDC** → split fee
+     * @param charity  Recipient wallet that receives the USDC
+     * @param poolFee  Uni V3 fee tier (500 = 0.05 %, 3000 = 0.3 %, …)
+     */
+    function donateAndSwap(
+        address payable charity,
+        uint24 poolFee
+    ) external payable nonReentrant {
+        require(msg.value > 0, "Amount must be > 0");
+        require(charity != address(0), "Invalid charity");
+
+        uint256 gross = msg.value;
+        uint256 fee = (gross * feeBasisPoints) / BASIS_POINTS;
+        uint256 net = gross - fee;
+
+        // --- 1. Swap ETH → WETH9 → USDC on Uni V3 ---
+
         ISwapRouter.ExactInputSingleParams memory params = ISwapRouter
             .ExactInputSingleParams({
-                tokenIn: address(0), // native ETH
-                tokenOut: address(usdc), // USDC token
-                fee: _poolFee, // Uniswap pool fee
-                recipient: address(this), // contract receives USDC
-                deadline: block.timestamp, // must execute in this block
-                amountIn: msg.value, // all ETH sent
-                amountOutMinimum: 0, // accept any amount
-                sqrtPriceLimitX96: 0 // no price limit
+                tokenIn: WETH9,
+                tokenOut: USDC,
+                fee: poolFee,
+                recipient: address(this),
+                deadline: block.timestamp + 300,
+                amountIn: net,
+                amountOutMinimum: 0,
+                sqrtPriceLimitX96: 0
             });
-        swapRouter.exactInputSingle{value: msg.value}(params);
 
-        // 2) Calculate fee and charity share
-        uint256 totalUsdc = usdc.balanceOf(address(this));
-        uint256 feeUsdc = (totalUsdc * FEE_BP) / BP_DIV;
-        uint256 charityUsdc = totalUsdc - feeUsdc;
+        uint256 usdcReceived = swapRouter.exactInputSingle{value: net}(params);
 
-        // 3) Distribute USDC shares
-        require(usdc.transfer(_platform, feeUsdc), "Fee transfer failed");
-        require(
-            usdc.transfer(_charity, charityUsdc),
-            "Charity transfer failed"
-        );
+        // --- 2. Forward USDC to charity ---
 
-        // 4) Emit event for off-chain indexing
-        emit DonationForwarded(
-            msg.sender,
-            _charity,
-            totalUsdc,
-            charityUsdc,
-            feeUsdc
-        );
+        IERC20(USDC).safeTransfer(charity, usdcReceived);
+
+        // --- 3. Pay raw‑ETH fee to platform wallet ---
+
+        (bool sent, ) = feeRecipient.call{value: fee}("");
+        require(sent, "Fee transfer failed");
+
+        emit DonationForwarded(msg.sender, charity, gross, net, fee);
     }
 
-    /// @notice Allow Uniswap router to refund leftover ETH
+    /// Router can refund leftover WETH9 by sending ETH directly here
     receive() external payable {}
 }
