@@ -7,8 +7,8 @@ import "@uniswap/v3-periphery/contracts/interfaces/ISwapRouter.sol";
 
 /**
  * @title FeeSwap
- * @notice Accepts a MATIC donation, swaps it to USDC on Uniswap V3,
- *         then pays a platform fee and forwards the rest to the charity.
+ * @notice Accepts a POL donation, swaps it to USDC on Uniswap V3,
+ *         then pays a platform fee and forwards the rest plus a stipend to the charity.
  */
 contract FeeSwap is ReentrancyGuard {
     using SafeERC20 for IERC20;
@@ -23,9 +23,12 @@ contract FeeSwap is ReentrancyGuard {
     uint256 public feeBasisPoints;
     uint256 public constant BASIS_POINTS = 10_000;
 
-    /// Polygon WETH9 (wrapped MATIC)
+    /// Polygon WETH9 (wrapped POL)
     address public constant WETH9 = 0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270;
     address public constant USDC = 0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174;
+
+    /// Fixed stipend of 0.005 POL for the charity per donation
+    uint256 public stipendAmount = 0.005 ether;
 
     // ───────────────────────────  events  ─────────────────────────────
 
@@ -33,12 +36,13 @@ contract FeeSwap is ReentrancyGuard {
     event DonationForwarded(
         address indexed donor,
         address indexed charity,
-        uint256 fullAmount,
-        uint256 netAmount,
-        uint256 fee
+        uint256 grossPOL,
+        uint256 feePOL,
+        uint256 stipendPOL,
+        uint256 usdcSent
     );
 
-    // ─────────────────────────␣constructor␣──────────────────────────
+    // ────────────────────────── constructor ──────────────────────────
 
     constructor(
         address payable _feeRecipient,
@@ -52,7 +56,7 @@ contract FeeSwap is ReentrancyGuard {
         swapRouter = ISwapRouter(_swapRouter);
     }
 
-    // ───────────────────────────  admin  ──────────────────────────────
+    // ─────────────────────────── admin ──────────────────────────────
 
     modifier onlyAdmin() {
         require(msg.sender == feeRecipient, "Not authorized");
@@ -65,33 +69,43 @@ contract FeeSwap is ReentrancyGuard {
         emit FeeUpdated(_bps);
     }
 
-    // ───────────────────────────  main flow  ──────────────────────────
+    receive() external payable {}
+
+    // ────────────────────────── main flow ───────────────────────────
 
     /**
-     * @notice Donate **MATIC** → swap to **USDC** → split fee
-     * @param charity  Recipient wallet that receives the USDC
+     * @notice Donate **POL** → take fee in POL → send stipend POL → swap rest to USDC → send USDC to charity
+     * @param charity  Wallet to receive both stipend POL and USDC
      * @param poolFee  Uniswap V3 fee tier (e.g. 3000 = 0.3%)
      */
     function donateAndSwap(
         address payable charity,
         uint24 poolFee
     ) external payable nonReentrant {
-        require(msg.value > 0, "Amount must be > 0");
+        require(msg.value > 0, "Must send POL");
         require(charity != address(0), "Invalid charity");
 
-        uint256 fullAmount = msg.value;
-        uint256 fee = (fullAmount * feeBasisPoints) / BASIS_POINTS;
-        uint256 netAmount = fullAmount - fee;
+        uint256 gross = msg.value;
+        uint256 fee = (gross * feeBasisPoints) / BASIS_POINTS;
+        uint256 afterFee = gross - fee;
+        require(afterFee > stipendAmount, "Stipend too high");
+        uint256 netAmount = afterFee - stipendAmount;
 
-        // Swap native MATIC → WETH9 → USDC
-        // Passing WETH9 as tokenIn and sending value=netAmount
-        // makes the router wrap the MATIC internally, so no approvals needed
+        // 1) Send fee in POL
+        (bool feeSent, ) = feeRecipient.call{value: fee}("");
+        require(feeSent, "Fee transfer failed");
+
+        // 2) Send stipend to charity in POL
+        (bool stipSent, ) = charity.call{value: stipendAmount}("");
+        require(stipSent, "Stipend transfer failed");
+
+        // 3) Swap remaining POL → USDC and send directly to charity
         ISwapRouter.ExactInputSingleParams memory params = ISwapRouter
             .ExactInputSingleParams({
                 tokenIn: WETH9,
                 tokenOut: USDC,
                 fee: poolFee,
-                recipient: address(this),
+                recipient: charity,
                 deadline: block.timestamp + 300,
                 amountIn: netAmount,
                 amountOutMinimum: 0,
@@ -102,16 +116,13 @@ contract FeeSwap is ReentrancyGuard {
             params
         );
 
-        // Distribute USDC to charity
-        IERC20(USDC).safeTransfer(charity, usdcReceived);
-
-        // Send the fee (in raw MATIC) to feeRecipient
-        (bool sent, ) = feeRecipient.call{value: fee}("");
-        require(sent, "Fee transfer failed");
-
-        emit DonationForwarded(msg.sender, charity, fullAmount, netAmount, fee);
+        emit DonationForwarded(
+            msg.sender,
+            charity,
+            gross,
+            fee,
+            stipendAmount,
+            usdcReceived
+        );
     }
-
-    /// @notice Enables the router to refund leftover WETH9 as raw MATIC
-    receive() external payable {}
 }
