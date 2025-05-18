@@ -27,7 +27,7 @@ contract FeeSwapEth is ReentrancyGuard {
     uint256 public constant BASIS_POINTS = 10_000;
 
     /// Fixed stipend in ETH for the charity per donation
-    uint256 public stipendAmount = 0.01 ether; // increased to cover Ethereum gas
+    uint256 public stipendAmount = 0.003 ether; // adjusted to cover a single ERC-20 transfer on Ethereum // increased to cover Ethereum gas
 
     /// Ethereum WETH9 (wrapped ETH)
     address public constant WETH9 = 0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2;
