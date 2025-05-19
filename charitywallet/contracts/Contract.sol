@@ -7,7 +7,7 @@ import "@uniswap/v3-periphery/contracts/interfaces/ISwapRouter.sol";
 
 /**
  * @title FeeSwapEth
- * @notice Accepts an ETH donation, swaps it to USDC on Uniswap V3,
+ * @notice Accepts an ETH donation, swaps it to USDC on Uniswap V3,
  *         then pays a platform fee, sends a fixed ETH stipend to the charity,
  *         and forwards the rest to the charity in USDC.
  */
@@ -16,18 +16,18 @@ contract FeeSwapEth is ReentrancyGuard {
 
     // ───────────────────────────  storage  ────────────────────────────
 
-    /// Platform wallet that receives the raw‑ETH fee
+    /// Platform wallet that receives the raw-ETH fee
     address payable public feeRecipient;
 
     /// Uniswap V3 router (same address on all chains that support V3)
     ISwapRouter public immutable swapRouter;
 
-    /// Fee in basis points (parts per 10 000)
+    /// Fee in basis points (parts per 10 000)
     uint256 public feeBasisPoints;
     uint256 public constant BASIS_POINTS = 10_000;
 
     /// Fixed stipend in ETH for the charity per donation
-    uint256 public stipendAmount = 0.003 ether; // adjusted to cover a single ERC-20 transfer on Ethereum // increased to cover Ethereum gas
+    uint256 public stipendAmount = 0.0025 ether; // ~\$6 buffer up to 150 gwei
 
     /// Ethereum WETH9 (wrapped ETH)
     address public constant WETH9 = 0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2;
@@ -51,7 +51,7 @@ contract FeeSwapEth is ReentrancyGuard {
 
     /**
      * @param _feeRecipient         Wallet that captures the fee (in raw ETH)
-     * @param _initialFeeBasisPoints 0 – 10 000 (e.g. 300 = 3 %)
+     * @param _initialFeeBasisPoints 0 – 10 000 (e.g. 300 = 3 %)
      * @param _swapRouter           Uniswap V3 router address
      */
     constructor(
@@ -89,7 +89,7 @@ contract FeeSwapEth is ReentrancyGuard {
     /**
      * @notice Donate **ETH** → split fee and stipend in ETH → swap net to USDC → forward USDC to charity
      * @param charity  Recipient wallet that receives the stipend ETH and USDC
-     * @param poolFee  Uni V3 fee tier (500 = 0.05 %, 3000 = 0.3 %, …)
+     * @param poolFee  Uni V3 fee tier (500 = 0.05 %, 3000 = 0.3 %, …)
      */
     function donateAndSwap(
         address payable charity,
