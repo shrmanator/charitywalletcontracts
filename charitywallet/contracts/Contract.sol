@@ -21,6 +21,7 @@ contract FeeSwapEth is ReentrancyGuard {
 
     /// Uniswap V3 router (same address on all chains that support V3)
     ISwapRouter public immutable swapRouter;
+    // swap address: 0xE592427A0AEce92De3Edee1F18E0157C05861564
 
     /// Fee in basis points (parts per 10 000)
     uint256 public feeBasisPoints;
