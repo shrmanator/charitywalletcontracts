@@ -28,13 +28,15 @@ contract FeeSwapWithSlippagePolygon is ReentrancyGuard {
 
     event FeeUpdated(uint256);
     event StipendUpdated(uint256);
+
+    // <-- replaced event definition:
     event DonationForwarded(
-        address donor,
-        address charity,
-        uint256 gross,
+        address indexed donor,
+        address indexed charity,
+        uint256 fullAmount,
+        uint256 netAmount,
         uint256 fee,
-        uint256 stipend,
-        uint256 out
+        uint256 usdcSent
     );
 
     constructor(
@@ -78,25 +80,25 @@ contract FeeSwapWithSlippagePolygon is ReentrancyGuard {
         require(charity != address(0), "Invalid charity");
         require(slippageBps < BASIS_POINTS, "Bad slippage");
 
-        // Calculate net donation and fee
+        // Calculate fee and net donation
         uint256 fee = (msg.value * feeBasisPoints) / BASIS_POINTS;
         uint256 net = msg.value - fee - stipendAmount;
         require(net > 0, "Net zero");
 
-        // Distribute fee and stipend
-        (bool f, ) = feeRecipient.call{value: fee}("");
-        require(f, "Fee failed");
-        (bool s, ) = charity.call{value: stipendAmount}("");
-        require(s, "Stipend failed");
+        // Pay out fee and stipend
+        (bool sentFee, ) = feeRecipient.call{value: fee}("");
+        require(sentFee, "Fee transfer failed");
+        (bool sentStipend, ) = charity.call{value: stipendAmount}("");
+        require(sentStipend, "Stipend transfer failed");
 
-        // Compute minimum USDC out
-        (, int256 ans, , , ) = priceFeed.latestRoundData();
-        require(ans > 0, "Oracle");
-        uint256 minOut = (((uint256(ans) * net) /
+        // Compute minimum USDC out based on priceFeed & slippage
+        (, int256 price, , , ) = priceFeed.latestRoundData();
+        require(price > 0, "Oracle error");
+        uint256 minOut = (((uint256(price) * net) /
             (10 ** priceFeed.decimals())) * (BASIS_POINTS - slippageBps)) /
             BASIS_POINTS;
 
-        // Swap MATIC -> USDC
+        // Swap MATIC -> USDC on Uniswap V3
         uint256 out = swapRouter.exactInputSingle{value: net}(
             ISwapRouter.ExactInputSingleParams({
                 tokenIn: WETH9,
@@ -110,13 +112,14 @@ contract FeeSwapWithSlippagePolygon is ReentrancyGuard {
             })
         );
 
+        // <-- emit updated event signature:
         emit DonationForwarded(
-            msg.sender,
-            charity,
-            msg.value,
-            fee,
-            stipendAmount,
-            out
+            msg.sender, // donor
+            charity, // charity
+            msg.value, // fullAmount
+            net, // netAmount
+            fee, // fee
+            out // usdcSent
         );
     }
 }
