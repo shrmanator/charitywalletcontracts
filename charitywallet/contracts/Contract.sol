@@ -28,7 +28,7 @@ contract FeeSwapEth is ReentrancyGuard {
 
     /// Fixed stipend in ETH for the charity per donation
     /// Covers a single ETH transfer (~0.000015 ETH) with ~4× buffer
-    uint256 public stipendAmount = 0.00006 ether;
+    uint256 public stipendAmount = 0.0004 ether;
 
     /// Ethereum WETH9 (wrapped ETH)
     address public constant WETH9 = 0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2;
