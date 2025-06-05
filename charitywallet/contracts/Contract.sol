@@ -17,12 +17,12 @@ interface IQuoter {
 }
 
 /**
- * @title FeeSwapEth
+ * @title EthSplitThenSwapV2
  * @notice Accepts an ETH donation, swaps it to USDC on Uniswap V3 with slippage protection,
  *         then pays a platform fee, sends a fixed ETH stipend to the charity,
  *         and forwards the rest to the charity in USDC.
  */
-contract FeeSwapEth is ReentrancyGuard {
+contract EthSplitThenSwapV2 is ReentrancyGuard {
     using SafeERC20 for IERC20;
 
     address payable public feeRecipient;
@@ -32,7 +32,7 @@ contract FeeSwapEth is ReentrancyGuard {
     uint256 public feeBasisPoints;
     uint256 public constant BASIS_POINTS = 10_000;
 
-    uint256 public stipendAmount = 0.0004 ether;
+    uint256 public stipendAmount = 0.0005 ether;
 
     address public constant WETH9 = 0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2;
     address public constant USDC = 0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48;
